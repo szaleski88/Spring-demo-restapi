@@ -14,10 +14,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostService {
 
+    private static final int PAGE_SIZE = 20;
+
     private final PostRepository postRepository;
 
-    public List<Post> getPosts() {
-        return postRepository.findAllPosts(PageRequest.of(0, 5));
+    public List<Post> getPosts(int page) {
+        return postRepository.findAllPosts(PageRequest.of(page, PAGE_SIZE));
     }
 
     public Post getSinglePost(long id) {

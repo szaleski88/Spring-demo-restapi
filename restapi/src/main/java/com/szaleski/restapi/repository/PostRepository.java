@@ -12,7 +12,7 @@ import com.szaleski.restapi.model.Post;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query(value = "SELECT p FROM Post p LEFT JOIN FETCH p.comments")
+    @Query(value = "SELECT p FROM Post p")
     List<Post> findAllPosts(Pageable page);
 
 }
