@@ -3,6 +3,8 @@ package com.szaleski.restapi.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -49,5 +51,15 @@ public class PostService {
 
     public Post addPost(Post post) {
         return postRepository.save(post);
+    }
+
+    @Transactional
+    public Post editPost(Post post) {
+        Post postEdited = postRepository.findById(post.getId()).orElseThrow();
+
+        postEdited.setTitle(postEdited.getTitle());
+        postEdited.setContent(postEdited.getContent());
+
+        return postEdited; // hibernate dirty checking - updates modified entities in db automatically. no need to save!
     }
 }
