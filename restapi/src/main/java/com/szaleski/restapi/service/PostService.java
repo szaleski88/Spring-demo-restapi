@@ -2,6 +2,7 @@ package com.szaleski.restapi.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.szaleski.restapi.model.Post;
@@ -16,7 +17,7 @@ public class PostService {
     private final PostRepository postRepository;
 
     public List<Post> getPosts() {
-        return postRepository.findAll();
+        return postRepository.findAllPosts(PageRequest.of(0, 5));
     }
 
     public Post getSinglePost(long id) {

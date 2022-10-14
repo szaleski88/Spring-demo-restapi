@@ -27,6 +27,6 @@ public class Post {
 
     @OneToMany
     @JoinColumn(name = "post_id")
-    private List<Comment> commentList;
+    private List<Comment> comments;
 
 }
