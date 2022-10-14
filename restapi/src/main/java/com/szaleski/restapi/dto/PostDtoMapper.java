@@ -1,4 +1,4 @@
-package com.szaleski.dto;
+package com.szaleski.restapi.dto;
 
 import java.util.List;
 import java.util.stream.Collectors;

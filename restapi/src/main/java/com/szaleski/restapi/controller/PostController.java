@@ -1,6 +1,6 @@
 package com.szaleski.restapi.controller;
 
-import static com.szaleski.dto.PostDtoMapper.mapToPostDtos;
+import static com.szaleski.restapi.dto.PostDtoMapper.mapToPostDtos;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.szaleski.dto.PostDto;
+import com.szaleski.restapi.dto.PostDto;
 import com.szaleski.restapi.model.Post;
 import com.szaleski.restapi.service.PostService;
 

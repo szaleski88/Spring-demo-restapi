@@ -1,4 +1,4 @@
-package com.szaleski.dto;
+package com.szaleski.restapi.dto;
 
 import java.time.LocalDateTime;
 
