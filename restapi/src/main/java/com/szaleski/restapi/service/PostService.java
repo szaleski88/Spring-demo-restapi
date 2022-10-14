@@ -62,4 +62,8 @@ public class PostService {
 
         return postEdited; // hibernate dirty checking - updates modified entities in db automatically. no need to save!
     }
+
+    public void deletePost(long id) {
+        postRepository.deleteById(id);
+    }
 }

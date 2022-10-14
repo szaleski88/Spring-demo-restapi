@@ -3,6 +3,7 @@ package com.szaleski.restapi.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +29,7 @@ public class Post {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private LocalDateTime created;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "postId", updatable = false, insertable = false)
     private List<Comment> comments;
 

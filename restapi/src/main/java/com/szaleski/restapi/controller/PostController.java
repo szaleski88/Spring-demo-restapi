@@ -5,6 +5,7 @@ import static com.szaleski.dto.PostDtoMapper.mapToPostDtos;
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,9 +50,15 @@ public class PostController {
         return postService.addPost(post);
     }
 
-    @PutMapping("posts")
+    @PutMapping("/posts")
     public Post editPost(@RequestBody Post post) {
         return postService.editPost(post);
+    }
+
+
+    @DeleteMapping("/posts/{id}")
+    public void deletePost(@PathVariable long id) {
+        postService.deletePost(id);
     }
 
 }
