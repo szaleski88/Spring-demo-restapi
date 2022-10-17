@@ -15,7 +15,7 @@
 	<description>Demo REST Api</description>
 	<properties>
 		<java.version>11</java.version>
-		<springdoc-version>1.6.11</springdoc-version>
+		<jwt.version>3.8.3</jwt.version>
 	</properties>
 
 	<dependencies>
@@ -32,10 +32,20 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>${springdoc-version}</version>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>${jwt.version}</version>
 		</dependency>
+		<dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
 
 		<dependency>
 			<groupId>com.h2database</groupId>

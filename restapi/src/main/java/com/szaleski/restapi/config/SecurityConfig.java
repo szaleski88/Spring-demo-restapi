@@ -2,28 +2,39 @@ package com.szaleski.restapi.config;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.RequiredArgsConstructor;
-
 @Configuration
-@RequiredArgsConstructor
-@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final DataSource dataSource;
     private final ObjectMapper objectMapper;
     private final RestAuthenticationSuccessHandler successHandler;
     private final RestAuthenticationFailureHandler failureHandler;
+    private final String secret;
+
+    public SecurityConfig(DataSource dataSource, ObjectMapper objectMapper, RestAuthenticationSuccessHandler successHandler,
+                          RestAuthenticationFailureHandler failureHandler,
+                          @Value("${jwt.secret}") String secret) {
+        this.dataSource = dataSource;
+        this.objectMapper = objectMapper;
+        this.successHandler = successHandler;
+        this.failureHandler = failureHandler;
+        this.secret = secret;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -40,15 +51,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http
             .authorizeRequests()
-            .antMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
+            .antMatchers("/swagger-ui.html").permitAll()
+            .antMatchers("/swagger-ui/index.html").permitAll()
+            .antMatchers("/v2/api-docs").permitAll()
+            .antMatchers("/webjars/**").permitAll()
+            .antMatchers("/swagger-resources/**").permitAll()
             .antMatchers("/h2-console/**").permitAll()
             .anyRequest().authenticated()
             .and()
-            .addFilter(authenticationFilter())
-            .exceptionHandling()
-            .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))  // this results in 401 in rest api instead od HTML!
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .headers().frameOptions().disable(); // to be able to visit h2-console
+            .addFilter(authenticationFilter())
+            .addFilter(new JwtAuthorizationFilter(authenticationManager(), userDetailsManager(), secret))
+            .exceptionHandling()
+            .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+            .and()
+            .headers().frameOptions().disable();
     }
 
     public JsonObjectAuthenticationFilter authenticationFilter() throws Exception {
@@ -59,4 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return authenticationFilter;
     }
 
+    @Bean
+    public UserDetailsManager userDetailsManager() {
+        return new JdbcUserDetailsManager(dataSource);
+    }
 }
