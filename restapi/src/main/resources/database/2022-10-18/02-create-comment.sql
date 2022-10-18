@@ -1,7 +1,7 @@
 --liquibase formatted sql
 --changeset szaleski:2
 CREATE TABLE COMMENT (
-    id BIGINT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     post_id BIGINT NOT NULL,
     content VARCHAR(2000) NULL,
     created TIMESTAMP

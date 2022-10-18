@@ -4,7 +4,6 @@ import static com.szaleski.restapi.dto.PostDtoMapper.mapToPostDtos;
 
 import java.util.List;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -59,7 +58,6 @@ public class PostController {
     public Post editPost(@RequestBody Post post) {
         return postService.editPost(post);
     }
-
 
     @DeleteMapping("/posts/{id}")
     public void deletePost(@PathVariable long id) {

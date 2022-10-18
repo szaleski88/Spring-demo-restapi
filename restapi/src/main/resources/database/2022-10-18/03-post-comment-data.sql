@@ -201,3 +201,7 @@ insert into comment(id, post_id, content, created) values (97, '10',  'Content 9
 insert into comment(id, post_id, content, created) values (98, '10',  'Content 98',  '2022-10-12 11:29:49.477808');
 insert into comment(id, post_id, content, created) values (99, '10',  'Content 99',  '2022-10-13 11:29:49.477808');
 insert into comment(id, post_id, content, created) values (100, '11',  'Content 100',  '2022-10-14 11:29:49.477808');
+
+
+ALTER SEQUENCE post_id_seq RESTART WITH 101;
+ALTER SEQUENCE comment_id_seq RESTART WITH 101;
