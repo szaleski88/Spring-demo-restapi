@@ -38,7 +38,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
     @Bean
     public Docket swaggerApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-            .ignoredParameterTypes(UsernamePasswordAuthenticationToken.class)
+            .ignoredParameterTypes(UsernamePasswordAuthenticationToken.class) // hides parameter from swagger ui
             .select()
             .paths(PathSelectors.regex("^(?!/(error).*$).*$"))
             .build()
