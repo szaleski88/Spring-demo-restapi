@@ -4,6 +4,7 @@ import static com.szaleski.restapi.dto.PostDtoMapper.mapToPostDtos;
 
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,6 +38,7 @@ public class PostController {
     }
 
     @GetMapping("/posts/comments")
+
     public List<Post> getPostsWithComments(@RequestParam(required = false) Integer page, Sort.Direction sort) {
         int pageNumber = page != null && page >= 0 ? page : 0;
         Sort.Direction sortDirection = sort != null ? sort : Sort.Direction.ASC;
