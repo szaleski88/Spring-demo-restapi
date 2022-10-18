@@ -1,12 +1,7 @@
-CREATE TABLE POST (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(400) NOT NULL,
-    content VARCHAR(2000) NULL,
-    created TIMESTAMP
-);
-
+--liquibase formatted sql
+--changeset szaleski:2
 CREATE TABLE COMMENT (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT PRIMARY KEY,
     post_id BIGINT NOT NULL,
     content VARCHAR(2000) NULL,
     created TIMESTAMP
